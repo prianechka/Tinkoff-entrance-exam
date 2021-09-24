@@ -9,32 +9,57 @@ class GameAdmin():
     
     def start_game(self):
         mode = self.helper.get_mode()
-        self.manager = GameManager(mode)
-        self.havemanager = 1
-        if (mode == 1):
-            N, M, amount_of_bombs = self.helper.params_mode()
-        else:
-            N, M, amount_of_bombs = 5, 5, None
-        self.manager.create_game(N, N, amount_of_bombs)
-        amount_of_bombs = self.manager.get_amount_of_bombs()
-        self.helper.start_game(N, M, amount_of_bombs)
-        self.play()
+        if (mode == 0):
+            pass
+        elif (mode == 1 or mode == 2):
+            self.manager = GameManager(mode)
+            self.havemanager = 1
+            if (mode == 2):
+                N, M, amount_of_bombs = self.helper.params_mode()
+            else:
+                N, M, amount_of_bombs = 5, 5, None
+            self.manager.create_game(N, M, amount_of_bombs)
+            amount_of_bombs = self.manager.get_amount_of_bombs()
+            self.helper.start_game(N, M, amount_of_bombs)
+            self.manager.show_game()
+            self.play()
+        elif (mode == 3):
+            pass
     
     def play(self):
-        total = self.manager.get_total()
-        amount_of_bombs = self.manager.get_amount_of_bombs()
-        self.helper.show_total(total, amount_of_bombs)
-        x, y, action = self.helper.get_cell()
-        if (action == 0):
-            result = self.manager.player_set_cell(x, y)
-            if (result == 0):
-                self.manager.show_game()
+        res = self.manager.check_win()
+        if (res == True):
+            total = self.manager.get_total()
+            self.helper.win_game(total)
+            self.finish()
+        else:
+            total = self.manager.get_total()
+            amount_of_bombs = self.manager.get_amount_of_bombs()
+            self.helper.show_total(total, amount_of_bombs)
+            N, M = self.manager.get_sizes()
+            action = self.helper.get_action()
+            if (action == "Save"):
                 self.play()
-            else:
-                self.helper.finish_game()
-                self.manager = None
-                self.havemanager = 0
+            if (action == "Exit"):
                 self.start_game()
-        elif (action == 1):
-            self.manager.player_set_flag(x, y)
-            self.play()
+            else:
+                x, y, = self.helper.get_cell(N, M)
+                if (action == "Open"):
+                    result = self.manager.player_set_cell(x, y)
+                    if (result == 0):
+                        self.manager.show_game()
+                        self.play()
+                    elif (result == -1):
+                        self.play()
+                    else:
+                        self.helper.finish_game()
+                        self.finish()
+                elif (action == "Flag"):
+                    self.manager.player_set_flag(x, y)
+                    self.manager.show_game()
+                    self.play()
+        
+    def finish(self):
+        self.manager = None
+        self.havemanager = 0
+        self.start_game()

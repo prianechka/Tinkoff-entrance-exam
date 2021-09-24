@@ -1,3 +1,7 @@
 BOMB = -1
 FLAG = -2
 NOT_SET = -3
+N_LIMIT = 5
+M_LIMIT = 5
+BOMB_LIMIT = 2
+MENU_LIMIT = 3

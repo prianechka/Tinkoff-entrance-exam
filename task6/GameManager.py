@@ -9,7 +9,7 @@ class GameManager():
     def create_game(self, N = 5, M = 5, amounts_of_bombs = None):
         self.keeper.set_N(N)
         self.keeper.set_M(M)
-        if (self.mode == 0):
+        if (self.mode == 1):
             self.keeper.choose_amount_bombs(2, 5)
         else:
             self.keeper.set_amount_bombs(amounts_of_bombs)
@@ -36,3 +36,15 @@ class GameManager():
     
     def get_amount_of_bombs(self):
         return self.keeper.get_amount_bombs()
+    
+    def check_win(self):
+        amount = self.get_amount_of_bombs()
+        total = self.get_total()
+        N, M = self.keeper.get_M(), self.keeper.get_N()
+        if (amount == 0) or (N * M - total - amount == 0):
+            return True
+        else:
+            return False
+    
+    def get_sizes(self):
+        return self.keeper.get_N(), self.keeper.get_M()

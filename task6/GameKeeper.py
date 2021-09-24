@@ -24,6 +24,12 @@ class GameKeeper():
     def set_M(self, M):
         self.M = M
     
+    def get_N(self):
+        return self.N
+    
+    def get_M(self):
+        return self.M
+    
     def choose_amount_bombs(self, A, B):
         self.amount_of_bombs = int(np.random.randint(A, B + 1, 1))
     
@@ -110,13 +116,13 @@ class GameKeeper():
                 result += self.check_bottom_cell(i, j)
                 result += self.check_bottom_left_cell(i, j)
                 result += self.check_left_cell(i, j)
-            elif ((i > 0) and (j + 1 == self.M)):
+            elif ((i > 0) and (i + 1 < self.N) and (j + 1 == self.M)):
                 result += self.check_bottom_cell(i, j)
                 result += self.check_bottom_left_cell(i, j)
                 result += self.check_left_cell(i, j)
                 result += self.check_up_left_cell(i, j)
                 result += self.check_up_cell(i, j)
-            elif ((i > 0) and (j == 0)):
+            elif ((i > 0) and (i + 1 < self.N) and (j == 0)):
                 result += self.check_bottom_cell(i, j)
                 result += self.check_bottom_right_cell(i, j)
                 result += self.check_right_cell(i, j)
@@ -151,14 +157,16 @@ class GameKeeper():
     
     def set_table_shooted(self, i, j):
         if self.play:
+            value = self.game.get_cell(i, j)
+            if (value == NOT_SET) or (value == FLAG):
+                self.count_celles += 1
             amount_bombs_around = self.count_bombs_around(i, j)
             self.game.set_shooted(i, j, amount_bombs_around)
-            self.count_celles += 1
     
     def set_table_flag(self, i, j):
         if self.play:
             value = self.game.get_cell(i, j)
-            if (value != 2):
+            if (value == NOT_SET or value == BOMB):
                 self.game.set_flag(i, j)
     
     def show_table(self):

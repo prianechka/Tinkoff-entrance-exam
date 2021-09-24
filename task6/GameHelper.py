@@ -1,3 +1,4 @@
+from defines import N_LIMIT, M_LIMIT, BOMB_LIMIT, MENU_LIMIT
 
 # Класс объекта, который общается с игроком и возвращает введённые им данные.
 class GameHelper():
@@ -9,29 +10,105 @@ class GameHelper():
         print("Привет! Выберите режим игры: ")
         print("1 - простой режим (поле 5x5), бомб от 2 до 5")
         print("2 - пользовательский режим: самостоятельный выбор количества бомб и размера таблицы")
-        choose = int(input("Выберите поле: ")) - 1 # Пока без исключений и проверок ввода
+        print("3 - загрузить игру")
+        print("0 - выход из игры")
+
+        result = False
+        while (result == False):
+            choose = input("Выберите поле: ")
+            result = self.check_mode(choose, MENU_LIMIT)
+        choose = int(choose)
         return choose
+
+    def check_mode(self, X, LIMIT):
+        try:
+            X = int(X)
+            if (X > LIMIT) or (X < 0):
+                print("Некорректный ввод!\nПопробуйте заново!")
+                return False
+            return True
+        except:
+            print("Некорректный ввод!\nПопробуйте заново!")
+            return False
     
+    def check_params(self, X, LIMIT):
+        try:
+            X = int(X)
+            if (X < LIMIT):
+                print("Некорректный ввод!\nПопробуйте заново!")
+                return False
+            return True
+        except:
+            print("Некорректный ввод!\nПопробуйте заново!")
+            return False
+
     def params_mode(self):
         print("\n")
-        N = int(input("Введите количество строк поля (не меньше 5): "))
-        M = int(input('Введите количество столбцов поля(не меньше 5): '))
-        amount_of_bombs = int(input("Введите количество бомб: (не менее 2): "))
+        result = False
+        while (result != True):
+            N = input("Введите количество строк поля (не меньше 5): ")
+            result = self.check_params(N, N_LIMIT)
+        N = int(N)
+
+        result = False
+        while (result != True):
+            M = input('Введите количество столбцов поля(не меньше 5): ')
+            result = self.check_params(M, M_LIMIT)
+        M = int(M)
+       
+        result = False
+        while (result != True):
+            amount_of_bombs = input("Введите количество бомб: (не менее 2): ")
+            result = self.check_params(amount_of_bombs, BOMB_LIMIT)
+        amount_of_bombs = int(amount_of_bombs)
         return N, M, amount_of_bombs
     
     def start_game(self, N, M, amount_of_bombs):
         print("Игра началась! Поле размером {}x{}, заложено {} бомб".format(N, M, amount_of_bombs))
+    
+    def get_action(self):
+        print("Введите действие: ")
+        print("Open - открыть ячейку")
+        print("Flag - поставить флаг в ячейке")
+        print("Save - сохранить игру")
+        print("Exit - выйти в меню")
+        string = input("Введите одно из действий: ")
+        while (string not in ["Open", "Flag", "Save", "Exit"]):
+            print("Введены некорректные данные! Попробуйте заново")
+            string = input("Введите одно из действий: ")
+        return string
 
-    def get_cell(self):
-        print("Введите через пробел: X, Y, Action (0 - открыть, 1 - поставить флаг)")
-        X, Y, Action = map(int, input().split())
-        return X, Y, Action
+    def check_numbers(self, X, Y, N, M):
+        try:
+            X = int(X)
+            Y = int(Y)
+            if (X > N) or (Y > M) or (X < 0) or (Y < 0):
+                print("Координаты введены некорректно!\nПопробуйте заново!")
+                return False
+            return True
+        except:
+            print("Координаты введены некорректно!\nПопробуйте заново!")
+            return False
+
+    def get_cell(self, N, M):
+        result = False
+        while (result == False):
+            X, Y = input("Введите через пробел: X, Y: ").split()
+            result = self.check_numbers(X, Y, N, M)
+        X, Y = int(X), int(Y)
+        X -= 1
+        Y -= 1
+        return X, Y
     
     def show_total(self, total, amount_of_bombs):
         print("Ваш счёт {}; осталось бомб - {}".format(total, amount_of_bombs))
 
     def finish_game(self):
         print("К сожалению вы подорвались на бомбе. Gameover.")
+        input("Введите что-нибудь, чтобы продолжить игру")
+    
+    def win_game(self, total):
+        print("Поздравляю, вы выиграли! Ваш счёт - {} очков".format(total))
         input("Введите что-нибудь, чтобы продолжить игру")
 
     def congratulations(self):

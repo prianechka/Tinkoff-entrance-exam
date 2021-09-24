@@ -5,13 +5,14 @@ class Shower():
         pass
 
     def show_matrix(self, matrix):
+        print("\nТекущая карта:")
         N, M = len(matrix), len(matrix[0])
         print("   ", end = '')
-        for i in range(M):
+        for i in range(1, M + 1):
             print(" {} ".format(i), end = '')
         print("\n" + "---" * (M + 1))
         for i in range(N):
-            print("{} |".format(i), end = '')
+            print("{} |".format(i + 1), end = '')
             for j in range(M):
                 if matrix[i][j] == FLAG:
                     print(" F ", end ='')
@@ -20,3 +21,4 @@ class Shower():
                 else:
                     print(" " + str(matrix[i][j]) + " ", end = '')
             print("|")
+        print()
