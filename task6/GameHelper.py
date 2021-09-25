@@ -100,6 +100,13 @@ class GameHelper():
         Y -= 1
         return X, Y
     
+    def get_filename(self):
+        string = input("Введите название файла (без расширения): ")
+        return string
+    
+    def bad_filename(self):
+        print("Не удалось открыть такой файл. Возможно, название указано неверно.")
+    
     def show_total(self, total, amount_of_bombs):
         print("Ваш счёт {}; осталось бомб - {}".format(total, amount_of_bombs))
 

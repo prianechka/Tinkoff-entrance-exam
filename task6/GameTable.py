@@ -16,6 +16,9 @@ class GameTable():
     def set_shooted(self, i, j, N):
         self.matrix[i][j] = N
     
+    def set_matrix(self, matrix):
+        self.matrix = matrix
+    
     def get_matrix(self):
         return self.matrix
     

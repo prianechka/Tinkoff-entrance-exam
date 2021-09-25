@@ -1,5 +1,8 @@
+from numpy import matrix
 from GameHelper import GameHelper
 from GameManager import GameManager
+from loader import Loader
+from saver import Saver
 
 class GameAdmin():
 
@@ -24,7 +27,15 @@ class GameAdmin():
             self.manager.show_game()
             self.play()
         elif (mode == 3):
-            pass
+            filename = self.helper.get_filename()
+            N, M, matrix, total, amount = Loader().load(filename)
+            if (N is None):
+                self.helper.bad_filename()
+            else:
+                self.manager = GameManager(mode = 2)
+                self.havemanager = 1
+                self.manager.load_game(N, M, matrix, total, amount)
+                self.play()
     
     def play(self):
         res = self.manager.check_win()
@@ -39,9 +50,15 @@ class GameAdmin():
             N, M = self.manager.get_sizes()
             action = self.helper.get_action()
             if (action == "Save"):
+                filename = self.helper.get_filename()
+                N, M = self.manager.get_sizes()
+                matrix = self.manager.get_matrix()
+                total = self.manager.get_total()
+                amount = self.manager.get_amount_of_bombs()
+                Saver().save(filename, N, M, matrix, total, amount)
                 self.play()
             if (action == "Exit"):
-                self.start_game()
+                exit()
             else:
                 x, y, = self.helper.get_cell(N, M)
                 if (action == "Open"):

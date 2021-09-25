@@ -48,3 +48,10 @@ class GameManager():
     
     def get_sizes(self):
         return self.keeper.get_N(), self.keeper.get_M()
+    
+    def get_matrix(self):
+        return self.keeper.get_matrix()
+    
+    def load_game(self, n, m, matrix, total, amount):
+        self.keeper.load_game(n, m, matrix, total, amount)
+        self.keeper.show_table()

@@ -176,6 +176,18 @@ class GameKeeper():
     def get_total(self):
         return self.count_celles
     
+    def get_matrix(self):
+        return self.game.get_matrix()
+    
     def finish_game(self):
         self.game = None
         self.play = 0
+    
+    def load_game(self, N, M, matrix, total, amount):
+        self.set_N(N)
+        self.set_M(M)
+        self.set_amount_bombs(amount)
+        self.count_celles = total
+        self.game = GameTable(self.N, self.M)
+        self.game.set_matrix(matrix)
+        self.play = 1
