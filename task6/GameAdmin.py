@@ -3,6 +3,9 @@ from GameHelper import GameHelper
 from GameManager import GameManager
 from loader import Loader
 from saver import Saver
+from Shower import Shower
+from GameAI import AI
+import os
 
 class GameAdmin():
 
@@ -13,7 +16,7 @@ class GameAdmin():
     def start_game(self):
         mode = self.helper.get_mode()
         if (mode == 0):
-            pass
+            exit()
         elif (mode == 1 or mode == 2):
             self.manager = GameManager(mode)
             self.havemanager = 1
@@ -57,8 +60,15 @@ class GameAdmin():
                 amount = self.manager.get_amount_of_bombs()
                 Saver().save(filename, N, M, matrix, total, amount)
                 self.play()
-            if (action == "Exit"):
-                exit()
+            elif (action == "Exit"):
+                self.start_game()
+            elif (action == "AI"):
+                N, M = self.manager.get_sizes()
+                matrix = self.manager.get_matrix()
+                new_matrix = Shower().create_matrix(matrix)
+                action, id = AI().predict(N, M, new_matrix)
+                self.helper.print_decision(action, id, M)
+                self.play()
             else:
                 x, y, = self.helper.get_cell(N, M)
                 if (action == "Open"):

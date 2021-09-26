@@ -5,7 +5,7 @@ class GameTable():
     def __init__(self, N, M):
         self.N = N
         self.M = M
-        self.matrix = [[NOT_SET] * self.N for i in range(self.M)]
+        self.matrix = [[NOT_SET] * self.M for i in range(self.N)]
     
     def set_bomb(self, i, j):
         self.matrix[i][j] = BOMB

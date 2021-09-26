@@ -1,3 +1,4 @@
+from numpy import matrix
 from GameKeeper import GameKeeper
 from Solver import Solver
 
@@ -51,6 +52,9 @@ class GameManager():
     
     def get_matrix(self):
         return self.keeper.get_matrix()
+    
+    def create_matrix_for_AI(self):
+        matrix = self.keeper.get_matrix()
     
     def load_game(self, n, m, matrix, total, amount):
         self.keeper.load_game(n, m, matrix, total, amount)

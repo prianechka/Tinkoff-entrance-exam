@@ -46,7 +46,7 @@ class GameHelper():
         print("\n")
         result = False
         while (result != True):
-            N = input("Введите количество строк поля (не меньше 5): ")
+            N = input("\nВведите количество строк поля (не меньше 5): ")
             result = self.check_params(N, N_LIMIT)
         N = int(N)
 
@@ -67,22 +67,23 @@ class GameHelper():
         print("Игра началась! Поле размером {}x{}, заложено {} бомб".format(N, M, amount_of_bombs))
     
     def get_action(self):
-        print("Введите действие: ")
+        print("\n\nВведите действие: \n")
         print("Open - открыть ячейку")
         print("Flag - поставить флаг в ячейке")
+        print("AI - получить ход от ИИ")
         print("Save - сохранить игру")
         print("Exit - выйти в меню")
-        string = input("Введите одно из действий: ")
-        while (string not in ["Open", "Flag", "Save", "Exit"]):
+        string = input("\nВведите одно из действий: ")
+        while (string not in ["Open", "Flag", "Save", "Exit", "AI"]):
             print("Введены некорректные данные! Попробуйте заново")
-            string = input("Введите одно из действий: ")
+            string = input("\nВведите одно из действий: ")
         return string
 
     def check_numbers(self, X, Y, N, M):
         try:
             X = int(X)
             Y = int(Y)
-            if (X > N) or (Y > M) or (X < 0) or (Y < 0):
+            if (X > N) or (Y > M) or (X <= 0) or (Y <= 0):
                 print("Координаты введены некорректно!\nПопробуйте заново!")
                 return False
             return True
@@ -100,6 +101,9 @@ class GameHelper():
         Y -= 1
         return X, Y
     
+    def print_decision(self, action, id, M):
+        print("\nРешение от AI - {}, клетка - {}, {}!\n".format(action, id // M + 1, id % M + 1))
+    
     def get_filename(self):
         string = input("Введите название файла (без расширения): ")
         return string
@@ -115,9 +119,9 @@ class GameHelper():
         input("Введите что-нибудь, чтобы продолжить игру")
     
     def win_game(self, total):
-        print("Поздравляю, вы выиграли! Ваш счёт - {} очков".format(total))
+        print("Поздравляю, вы выиграли! Ваш счёт - {} очков\n".format(total))
         input("Введите что-нибудь, чтобы продолжить игру")
 
     def congratulations(self):
-        print("Поздравляю! Вы - выиграли!")
+        print("Поздравляю! Вы - выиграли!\n")
         input("Введите что-нибудь, чтобы продолжить игру")
