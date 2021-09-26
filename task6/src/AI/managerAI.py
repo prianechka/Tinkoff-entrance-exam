@@ -198,9 +198,6 @@ class AImanager():
                 if (len(group.get_list()) > 0):
                     return "Open", group.get_list()[0].get_id()
             elif (group.get_bombs() == len(group.get_list())):
-                lst = group.get_list()
-                for i in range(len(lst)):
-                    print(lst[i].get_id(), group.get_bombs())
                 if (len(group.get_list()) > 0):
                     return "Flag", group.get_list()[0].get_id()
         return "None", -1
