@@ -1,7 +1,7 @@
 from defines import BOMB, FLAG, NOT_SET
 import numpy as np
-from GameTable import GameTable
-from Shower import Shower
+from gameTable import GameTable
+from shower import Shower
 
 class GameKeeper():
     

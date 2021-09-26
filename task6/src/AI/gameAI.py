@@ -1,4 +1,4 @@
-from AI_manager import AImanager
+from managerAI import AImanager
 
 class AI():
     
@@ -14,7 +14,6 @@ class AI():
             action = "Open"
             self.manager.create_list()
             self.manager.make_matrix_probability()
-            print(self.manager.prob_matrix)
             self.manager.change_probs()
             id = self.manager.make_prob_decision()
         

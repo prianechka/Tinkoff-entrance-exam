@@ -94,8 +94,12 @@ class GameHelper():
     def get_cell(self, N, M):
         result = False
         while (result == False):
-            X, Y = input("Введите через пробел: X, Y: ").split()
-            result = self.check_numbers(X, Y, N, M)
+            try:
+                X, Y = input("Введите через пробел: X, Y: ").split()
+                result = self.check_numbers(X, Y, N, M)
+            except:
+                print("Координаты введены некорректно!\nПопробуйте заново!")
+                result = False
         X, Y = int(X), int(Y)
         X -= 1
         Y -= 1

@@ -1,6 +1,6 @@
 from numpy import matrix
-from GameKeeper import GameKeeper
-from Solver import Solver
+from gameKeeper import GameKeeper
+from solver import Solver
 
 class GameManager():
     def __init__(self, mode):

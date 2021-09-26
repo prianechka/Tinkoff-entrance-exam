@@ -1,11 +1,10 @@
 from numpy import matrix
-from GameHelper import GameHelper
-from GameManager import GameManager
+from gameHelper import GameHelper
+from gameManager import GameManager
 from loader import Loader
 from saver import Saver
-from Shower import Shower
-from GameAI import AI
-import os
+from shower import Shower
+from gameAI import AI
 
 class GameAdmin():
 

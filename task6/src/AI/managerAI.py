@@ -195,10 +195,13 @@ class AImanager():
         for i in range(self.list_shape):
             group = self.list_of_groups[i]
             if (group.get_bombs() == 0):
-                if (len(group) > 0):
+                if (len(group.get_list()) > 0):
                     return "Open", group.get_list()[0].get_id()
             elif (group.get_bombs() == len(group.get_list())):
-                if (len(group) > 0):
+                lst = group.get_list()
+                for i in range(len(lst)):
+                    print(lst[i].get_id(), group.get_bombs())
+                if (len(group.get_list()) > 0):
                     return "Flag", group.get_list()[0].get_id()
         return "None", -1
 
